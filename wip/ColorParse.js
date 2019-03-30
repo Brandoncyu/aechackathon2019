@@ -51,7 +51,15 @@ class ColorParse {
     })
   }
 
-  static async GetPaletteAnalysis(lat, long) {
+  /**
+   * Get the color palette of a location as names of primary colors
+   * from google street view at the given lat, long, and orientaiton. Views will be taken at 0, 90 and 180 degrees
+   * around the central point.
+   * @param {String} lat Latitude of location.
+   * @param {String} long Longitude of location.
+   * @returns {Object} A collection of Objects containing color palette data.
+   */
+  static GetPaletteNames(lat, long) {
     let self = this;
     let bearings = [0, 90, 180];
     let promises = [];
@@ -74,8 +82,27 @@ class ColorParse {
       });
       promises.push(prom);
     });
-
     return Promise.all(promises);
+  }
+
+  /**
+   * Get a percentage of "greenery" visible in a 360 panorama taken at the given latitude/longitude.
+   * @param {String} lat Latitude of location.
+   * @param {String} long Longitude of location.
+   * @returns {Number} A decimal percentage of the prevalance of green in the field of view.
+   */
+  static GetPaletteAnalysis(lat, long) {
+    let self = this;
+    return new Promise(function (resolve, reject) {
+
+      self.GetPaletteNames(lat, long).then(palette => {
+        let merged = palette[0].concat(palette[1]).concat(palette[2]);
+        var count = merged.reduce(function (n, val) {
+          return n + (val === 'Green');
+        }, 0);
+        resolve(count/merged.length);
+      });
+    });
   }
 
   /**

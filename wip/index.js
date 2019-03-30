@@ -5,6 +5,11 @@ const ColorParse = require('./ColorParse');
 //   console.log(colors);
 // });
 
+// ColorParse.GetPaletteNames(46.414382, 10.013988).then(result => {
+//   console.log(result);
+//   console.log(result);
+// })
+
 ColorParse.GetPaletteAnalysis(46.414382, 10.013988).then(result => {
   console.log(result);
   console.log(result);
