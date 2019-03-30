@@ -1,4 +1,5 @@
 var Vibrant = require('node-vibrant');
+const ntc = require('ntcjs');
 
 class ColorParse {
   constructor() {}
@@ -25,6 +26,14 @@ class ColorParse {
           resolve(palette);
         }).catch(err => console.error(err));
     })
+  }
+
+  static GetPaletteName() {
+    let result = ntc.name('#6195ed');
+
+    let rgb_value = result[0];
+    let specific_name = result[1];
+    let is_exact_match = result[2];
   }
 
 }
