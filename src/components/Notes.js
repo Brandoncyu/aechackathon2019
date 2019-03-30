@@ -48,6 +48,7 @@ class Notes extends Component {
     let longitude = this.props.longitude
     let newBlob = {date, blobURL, latitude, longitude}
     let newBlobs = [ ...this.state.blobs, newBlob ]
+    console.log(newBlobs)
     this.setState({
       blobs: newBlobs
     })
@@ -57,19 +58,8 @@ class Notes extends Component {
     return (<Container fluid={true}>
       <Row>
         <Col xl="3"></Col>
-        <Col>
+        <Col xl="6">
           <Form className="p-4" id="initial-form">
-            <FormGroup>
-              <Label htmlFor="email">Email</Label>
-              <Input type="email" name="email" id="email" placeholder="Verify your email address" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="exampleText">Text Area</Label>
-              <Input type="textarea" name="text" id="exampleText" />
-            </FormGroup>
-              <Button color="primary">Find Your Route!</Button>
-              <br /><br />
-
               <ReactMic
                 record={this.state.record}
                 className="sound-wave"
