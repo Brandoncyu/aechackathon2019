@@ -54,27 +54,28 @@ class ColorParse {
   static async GetPaletteAnalysis(lat, long) {
     let self = this;
     let bearings = [0, 90, 180];
-    let returnList = [];
-    promises = [];
+    let promises = [];
 
-    return new Promise(async function (resolve, reject) {
-      await bearings.forEach(b => {
+    bearings.forEach(b => {
+      let prom = new Promise(function (resolve, reject) {
+        let returnList = [];
+
         self.GetPalette(lat, long, b).then(colors => {
 
           // iterate over palette objects, parse color names
           for (var key in colors) {
             if (colors.hasOwnProperty(key)) {
               let shade = colors[key]['closestShade'];
-              // returnObj[b][key].push(shade);
               returnList.push(shade);
+              resolve(returnList);
             }
           }
-          resolve(returnList);
-
         });
       });
-    }).catch(err => console.err(err))
+      promises.push(prom);
+    });
 
+    return Promise.all(promises);
   }
 
   /**
