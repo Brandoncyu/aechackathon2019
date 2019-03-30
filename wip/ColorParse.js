@@ -51,6 +51,32 @@ class ColorParse {
     })
   }
 
+  static async GetPaletteAnalysis(lat, long) {
+    let self = this;
+    let bearings = [0, 90, 180];
+    let returnList = [];
+    promises = [];
+
+    return new Promise(async function (resolve, reject) {
+      await bearings.forEach(b => {
+        self.GetPalette(lat, long, b).then(colors => {
+
+          // iterate over palette objects, parse color names
+          for (var key in colors) {
+            if (colors.hasOwnProperty(key)) {
+              let shade = colors[key]['closestShade'];
+              // returnObj[b][key].push(shade);
+              returnList.push(shade);
+            }
+          }
+          resolve(returnList);
+
+        });
+      });
+    }).catch(err => console.err(err))
+
+  }
+
   /**
    * Get the closest color hue name to the input color in hex format.
    * @param {String} hex Hex code of color to parse.
