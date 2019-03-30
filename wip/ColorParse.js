@@ -1,4 +1,4 @@
-var Vibrant = require('node-vibrant')
+var Vibrant = require('node-vibrant');
 
 class ColorParse {
   constructor() {}
@@ -16,10 +16,10 @@ class ColorParse {
     return base + size + location + headingStr + pitch + key;
   }
 
-  static GetPalette() {
+  static GetPalette(lat, long, heading) {
     let self = this;
     return new Promise(function (resolve, reject) {
-      let url = self.BuildRequest(46.414382, 10.013988, 151.78);
+      let url = self.BuildRequest(lat, long, heading);
       Vibrant.from(url).getPalette()
         .then(palette => {
           resolve(palette);
