@@ -4,6 +4,13 @@ const ntc = require('./ntc');
 class ColorParse {
   constructor() {}
 
+  /**
+   * Build a url request for a google street view image.
+   * @param {String} lat Latitude of location.
+   * @param {String} long Longitude of location.
+   * @param {String} heading Direciton of google street view image (between 0 to 360).
+   * @returns {String} A url for google maps.
+   */
   static BuildRequest(lat, long, heading) {
     // let location = 'location=46.414382,10.013988&';
     // let heading = 'heading=151.78&';
@@ -17,23 +24,57 @@ class ColorParse {
     return base + size + location + headingStr + pitch + key;
   }
 
+  /**
+   * Get the color palette of the image from google street view at the given lat, long, and orientaiton.
+   * @param {String} lat Latitude of location.
+   * @param {String} long Longitude of location.
+   * @param {String} heading Direciton of google street view image (between 0 to 360).
+   * @returns {Object} A collection of Objects containing color palette data.
+   */
   static GetPalette(lat, long, heading) {
     let self = this;
     return new Promise(function (resolve, reject) {
       let url = self.BuildRequest(lat, long, heading);
       Vibrant.from(url).getPalette()
         .then(palette => {
+
+          // iterate over palette objects, parse color names
+          for (var key in palette) {
+            if (palette.hasOwnProperty(key)) {
+              palette[key]['closestShade'] = self.GetClosestShadeName(palette[key].hex);
+              palette[key]['closestColor'] = self.GetClosestColorName(palette[key].hex);
+            }
+          }
+
           resolve(palette);
         }).catch(err => console.error(err));
     })
   }
 
-  static GetPaletteName() {
-    let result = ntc.name('#6195ed');
+  /**
+   * Get the closest color hue name to the input color in hex format.
+   * @param {String} hex Hex code of color to parse.
+   * @returns {string} A color name.
+   */
+  static GetClosestShadeName(hex) {
+    let result = ntc.name(hex);
+    // let rgb_value = result[0]; // #6495ed : RGB value of closest match
+    // let specific_name = result[1]; // Cornflower Blue : Color name of closest match
+    // let shade_value = result[2]; // #0000ff : RGB value of shade of closest match
+    // let shade_name = result[3]; // Blue : Color name of shade of closest match
+    // let is_exact_match = result[4]; // false True if exact color match
 
-    let rgb_value = result[0];
-    let specific_name = result[1];
-    let is_exact_match = result[2];
+    return result[3];
+  }
+
+  /**
+   * Get the closest color name to the input color in hex format.
+   * @param {String} hex Hex code of color to parse.
+   * @returns {string} A color name.
+   */
+  static GetClosestColorName(hex) {
+    let result = ntc.name(hex);
+    return result[1];
   }
 
 }
