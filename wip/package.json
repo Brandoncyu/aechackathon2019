@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-vibrant": "^3.2.0-alpha",
-    "ntcjs": "^1.1.2"
+    "node-vibrant": "^3.2.0-alpha"
   }
 }

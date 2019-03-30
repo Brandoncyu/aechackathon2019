@@ -1,5 +1,5 @@
 var Vibrant = require('node-vibrant');
-const ntc = require('ntcjs');
+const ntc = require('./ntc');
 
 class ColorParse {
   constructor() {}
