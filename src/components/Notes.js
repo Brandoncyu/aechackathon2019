@@ -16,9 +16,11 @@ class Notes extends Component {
     super(props);
     this.state = {
       record: false,
-      blobs: []
+      blobs: [],
     }
   }
+
+
 
   startRecording = () => {
     this.setState({
@@ -27,7 +29,6 @@ class Notes extends Component {
   }
 
   stopRecording = (e) => {
-    console.log(e)
     this.setState({
       record: false
     });
@@ -39,7 +40,13 @@ class Notes extends Component {
 
   onStop = (recordedBlob) => {
     // console.log('recordedBlob is: ', recordedBlob);
-    let newBlob = recordedBlob.blobURL
+    this.props.getMyLocation()
+
+    let date = new Date()
+    let blobURL = recordedBlob.blobURL
+    let latitude = this.props.latitude
+    let longitude = this.props.longitude
+    let newBlob = {date, blobURL, latitude, longitude}
     let newBlobs = [ ...this.state.blobs, newBlob ]
     this.setState({
       blobs: newBlobs
