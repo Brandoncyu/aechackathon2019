@@ -12,6 +12,7 @@ import {
   Input
 } from 'reactstrap'
 import InitialForm from './components/InitialForm'
+import Notes from './components/Notes'
 
 class App extends Component {
   constructor(props){
@@ -56,6 +57,8 @@ class App extends Component {
           pace = {this.state.pace}
           features = {this.state.features}
         />
+        <br></br>
+        <Notes />
       </div>
     );
   }

@@ -6,6 +6,7 @@
     "bootstrap": "^4.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-mp3-recorder": "^1.1.2",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0"
   },
