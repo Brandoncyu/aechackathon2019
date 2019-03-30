@@ -10,7 +10,7 @@ import {
   Input
 } from 'reactstrap'
 
-const InitialForm = ({editState, editFeatures}) => {
+const InitialForm = ({editState, editFeatures, email, time, pace, features}) => {
   return (<Container fluid={true}>
     <Row>
       <Col xl="3"></Col>
@@ -18,15 +18,15 @@ const InitialForm = ({editState, editFeatures}) => {
         <Form className="p-4" id="initial-form">
           <FormGroup>
             <Label htmlFor="email">Email</Label>
-            <Input type="email" name="email" id="email" placeholder="Verify your email address" onChange={editState} />
+            <Input type="email" name="email" id="email" placeholder="Verify your email address" value={email} onChange={editState} />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="time">Time</Label>
-            <Input type="number" name="time" id="time" placeholder="How Much Time Do You Have Available?" onChange={editState} />
+            <Input type="number" name="time" id="time" placeholder="How Much Time Do You Have Available?" value={time} onChange={editState} />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="pace">Pace</Label><br />
-            <Input type="select" name="pace" id="pace" onChange={editState}>
+            <Input type="select" name="pace" id="pace" value={pace} onChange={editState}>
               <option value="slow">Slow</option>
               <option value="medium">Medium</option>
               <option value="fast">Fast</option>
@@ -34,7 +34,7 @@ const InitialForm = ({editState, editFeatures}) => {
           </FormGroup>
           <FormGroup>
           <Label htmlFor="features">Features</Label>
-            <Input type="select" name="features" id="features" onChange={editFeatures} multiple>
+            <Input type="select" name="features" id="features" value={features} onChange={editFeatures} multiple>
               <option value="nature">Nature</option>
               <option value="urban">Urban</option>
               <option value="shade">Shade</option>

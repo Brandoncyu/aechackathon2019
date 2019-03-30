@@ -18,7 +18,7 @@ class App extends Component {
     super(props)
     this.state = {
       email: '',
-      time: 0,
+      time: '',
       pace: 'slow',
       features: []
     }
@@ -46,10 +46,17 @@ class App extends Component {
   render() {
     console.log(this.state)
     return (
-      <InitialForm
-        editState = {this.editState}
-        editFeatures = {this.editFeatures}
-      />
+      <div>
+        <h1 id ="title">Stroll</h1>
+        <InitialForm
+          editState = {this.editState}
+          editFeatures = {this.editFeatures}
+          email = {this.state.email}
+          time = {this.state.time}
+          pace = {this.state.pace}
+          features = {this.state.features}
+        />
+      </div>
     );
   }
 }
