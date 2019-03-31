@@ -97,6 +97,7 @@ class App extends Component {
 
   finishStroll = async () =>{
     this.setState({signin: true})
+    console.log(this.state.blobs)
     await axios.post('http://localhost:4000/send', {email: this.state.email, text: this.state.blobs})
   }
 
