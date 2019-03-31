@@ -43,7 +43,7 @@ class RouteData {
     return grid;
   }
 
-   /**
+  /**
    * Get graph object representing the points which are walkable given an origin lat/long, radius, and
    * distance between points for creation of a grid.
    * @param {String} lat Latitude of location.
@@ -54,20 +54,24 @@ class RouteData {
    * @returns {Graph} A ngraph.graph object.
    */
   static GetGraph(lat, long, radius, pointDist, linkTolerance) {
-    this.GetGraphData(lat, long, radius, pointDist, linkTolerance).then(r => {
-      let graph = createGraph();
-      r.map(o => {
-        let idA = String(o.idA[0]) + '-' + String(o.idA[1]);
-        let idB = String(o.idB[0]) + '-' + String(o.idB[1]);
+    let self = this;
+    return new Promise(function (resolve, reject) {
 
-        graph.addLink(idA, idB, {
-          greenScore: o.greenScore
+      self.GetGraphData(lat, long, radius, pointDist, linkTolerance).then(r => {
+        let graph = createGraph();
+        r.map(o => {
+          let idA = String(o.idA[0]) + '-' + String(o.idA[1]);
+          let idB = String(o.idB[0]) + '-' + String(o.idB[1]);
+
+          graph.addLink(idA, idB, {
+            greenScore: o.greenScore
+          });
         });
-      });
 
-      return graph;
+        resolve(graph);
 
-    }).catch(err => console.error(err));
+      }).catch(err => console.error(err));
+    });
   }
 
   /**
@@ -78,7 +82,7 @@ class RouteData {
    * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
    * @param {String} pointDist How far apart the points should be in the point grid.
    * @param {String} linkTolerance The minimum distance between points to be considered a "link".
-   * @returns {Graph} A ngraph.graph object.
+   * @returns {Object} A ngraph.graph object.
    */
   static async GetGraphData(lat, long, radius, pointDist, linkTolerance) {
     let grid = this.GetPointGrid(lat, long, radius, pointDist);
@@ -86,11 +90,9 @@ class RouteData {
 
     // add all points as nodes
     grid.features.map(o1 => {
-      let id = String(o1.geometry.coordinates[0]) + '-' + String(o1.geometry.coordinates[1]);
 
       // iterate over the same collection to get links between nodes based on distance
       grid.features.map(o2 => {
-        let id2 = String(o2.geometry.coordinates[0]) + '-' + String(o2.geometry.coordinates[1]);
         let distance = turf.distance(o1.geometry.coordinates, o2.geometry.coordinates);
 
         // console.log(distance);
@@ -103,7 +105,7 @@ class RouteData {
               let returnObj = {
                 idA: o1.geometry.coordinates,
                 idB: o2.geometry.coordinates,
-                greenScore: result
+                greenScore: 1 - (+result)
               };
               resolve(returnObj);
             }).catch(err => console.error(err))
@@ -120,22 +122,20 @@ class RouteData {
     let pathFinder = aStar(graph, {
       distance(fromNode, toNode) {
 
-        let dx = fromNode.data.x - toNode.data.x;
-        let dy = fromNode.data.y - toNode.data.y;
-
-        return Math.sqrt(dx * dx + dy * dy);
+        // let dx = fromNode.data.x - toNode.data.x;
+        // let dy = fromNode.data.y - toNode.data.y;
+        // return Math.sqrt(dx * dx + dy * dy);
+        return link.data.greenScore;
       },
       heuristic(fromNode, toNode) {
         // this is where we "guess" distance between two nodes.
-        // In this particular case our guess is the same as our distance
-        // function:
         let dx = fromNode.data.x - toNode.data.x;
         let dy = fromNode.data.y - toNode.data.y;
 
         return Math.sqrt(dx * dx + dy * dy);
       }
     });
-    let path = pathFinder.find('NYC', 'Washington');
+    return pathFinder.find('NYC', 'Washington');
   }
 
 }
