@@ -11,6 +11,8 @@
   "dependencies": {
     "@turf/random": "^6.0.2",
     "get-pixels": "^3.3.2",
+    "ngraph.graph": "0.0.18",
+    "ngraph.path": "^1.1.0",
     "node-vibrant": "^3.2.0-alpha",
     "querystring": "^0.2.0",
     "request": "^2.88.0",

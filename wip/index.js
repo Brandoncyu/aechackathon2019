@@ -12,7 +12,10 @@ const RouteData = require('./RouteData');
 // let points = RouteData.GetRandomPointGrid(-90.548630, 14.616599, 1, 10);
 // console.log(points);
 
-let points = RouteData.GetPointGrid(-90.548630, 14.616599, 1, 0.1);
+// let points = RouteData.GetPointGrid(-90.548630, 14.616599, 1, 0.1);
+// console.log(points);
+
+let points = RouteData.GetGraph(-90.548630, 14.616599, 1, 0.1, 0.2);
 console.log(points);
 
 // let sunData = WeatherData.GetSunPositionToday(47.6694956, -122.31547389999999);
