@@ -10,6 +10,7 @@
     "@turf/random": "^6.0.2",
     "bootstrap": "^4.3.1",
     "node-vibrant": "^3.2.0-alpha",
+    "google-maps-react": "^2.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-mic": "^12.4.1",

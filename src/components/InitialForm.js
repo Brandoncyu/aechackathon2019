@@ -10,12 +10,12 @@ import {
   Input
 } from 'reactstrap'
 
-const InitialForm = ({editState, editFeatures, email, time, pace, features}) => {
+const InitialForm = ({editState, editFeatures, email, time, pace, features, submit}) => {
   return (<Container fluid={true}>
     <Row>
       <Col xl="3"></Col>
       <Col>
-        <Form className="p-4" id="initial-form">
+        <Form className="p-4" id="initial-form" onSubmit={submit}>
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <Input type="email" name="email" id="email" placeholder="Verify your email address" value={email} onChange={editState} />
@@ -27,9 +27,9 @@ const InitialForm = ({editState, editFeatures, email, time, pace, features}) => 
           <FormGroup>
             <Label htmlFor="pace">Pace</Label><br />
             <Input type="select" name="pace" id="pace" value={pace} onChange={editState}>
-              <option value="slow">Slow</option>
-              <option value="medium">Medium</option>
-              <option value="fast">Fast</option>
+              <option value="2">Slow</option>
+              <option value="3">Medium</option>
+              <option value="4">Fast</option>
             </Input>
           </FormGroup>
           <FormGroup>

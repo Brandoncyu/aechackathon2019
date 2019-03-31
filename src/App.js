@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InitialForm from './components/InitialForm'
+import MapContainer from './components/MapContainer'
 import Notes from './components/Notes'
 import {
   Button,
-  Form,
   Container,
   Row,
   Col,
@@ -17,11 +17,13 @@ class App extends Component {
     this.state = {
       email: '',
       time: '',
-      pace: 'slow',
+      pace: 0,
       features: [],
       latitude: '',
       longitude: '',
-      blobs: []
+      blobs: [],
+      distance: '',
+      signin: true
     }
     this.getMyLocation = this.getMyLocation.bind(this)
   }
@@ -65,6 +67,15 @@ class App extends Component {
     })
   }
 
+  submit = (e) => {
+    e.preventDefault()
+    let distance = (Number(this.state.time) * Number(this.state.pace))/120
+    this.setState({
+      distance,
+      signin: false
+    })
+  }
+
   setBlobs = (blobURL) => {
     this.getMyLocation()
     let date = new Date()
@@ -81,30 +92,40 @@ class App extends Component {
     return (
       <div>
         <h1 id ="title">Stroll</h1>
-        <InitialForm
+        {this.state.signin && <InitialForm
           editState = {this.editState}
           editFeatures = {this.editFeatures}
           email = {this.state.email}
           time = {this.state.time}
           pace = {this.state.pace}
           features = {this.state.features}
+          submit = {this.submit}
+        />}
+        <br />
+        {!this.state.signin && <div>
+        <MapContainer
+          latitude = {this.state.latitude}
+          longitude = {this.state.longitude}
         />
-        <br></br>
+
+        <br />
         <Notes
           latitude = {this.state.latitude}
           longitude = {this.state.longitude}
           setBlobs = {this.setBlobs}
         />
+
         <br />
-        <Container>
+         <Container>
           <Row>
             <Col xl="2"></Col>
             <Col style={{display: 'flex', justifyContent: 'center'}} >
-              <Button size="lg" color="primary" block>Finish My Stroll!</Button>
+              <Button size="lg" color="primary" block onClick={()=>this.setState({signin: true})}>Finish My Stroll!</Button>
             </Col>
             <Col xl="2"></Col>
           </Row>
         </Container>
+        </div>}
         <br />
         <br />
       </div>

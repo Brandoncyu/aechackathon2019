@@ -6,6 +6,16 @@
   border-radius: 25px;
 }
 
+#map {
+  border-style: solid;
+  border-radius: 25px;
+  border-color: white
+}
+
+#map-title {
+  color: white
+}
+
 #title {
   font-size: 100px;
   color: white;
@@ -13,6 +23,6 @@
 }
 
 .sound-wave {
-  height:80px;
-  width:340px;
+  height: 80px;
+  width: 340px;
 }
