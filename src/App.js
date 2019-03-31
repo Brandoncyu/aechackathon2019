@@ -1,27 +1,134 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import InitialForm from './components/InitialForm'
+import MapContainer from './components/MapContainer'
+import Notes from './components/Notes'
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+} from 'reactstrap'
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      email: '',
+      time: '',
+      pace: 0,
+      features: [],
+      latitude: '',
+      longitude: '',
+      blobs: [],
+      distance: '',
+      signin: true
+    }
+    this.getMyLocation = this.getMyLocation.bind(this)
+  }
+
+  componentDidMount() {
+    this.getMyLocation()
+  }
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation
+
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+
+  }
+
+  editState = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  editFeatures = (e) => {
+    let newFeatures = []
+    for (let i = 0, len = e.target.options.length; i < len; i++) {
+        let opt = e.target.options[i];
+        if (opt.selected) {
+            newFeatures.push(opt.value);
+        }
+    }
+    this.setState({
+      features: newFeatures
+    })
+  }
+
+  submit = (e) => {
+    e.preventDefault()
+    let distance = (Number(this.state.time) * Number(this.state.pace))/120
+    this.setState({
+      distance,
+      signin: false
+    })
+  }
+
+  setBlobs = (blobURL) => {
+    this.getMyLocation()
+    let date = new Date()
+    let latitude = this.state.latitude
+    let longitude = this.state.longitude
+    let newBlob = {date, blobURL, latitude, longitude}
+    let blobs = [ ...this.state.blobs, newBlob ]
+    this.setState({
+      blobs
+    })
+  }
+
   render() {
     return (
-      <form>
-        <fieldset>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" value="email" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="time">Time</label>
-          <input type="number" name="time" id="time" value="time" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="email">Pace</label>
-          <select>
-            <option value="slow">Slow</option>
-            <option value="medium">Medium</option>
-            <option value="fast">Fast</option>
-          </select>
-        </fieldset>
-      </form>
+      <div>
+        <h1 id ="title">Stroll</h1>
+        {this.state.signin && <InitialForm
+          editState = {this.editState}
+          editFeatures = {this.editFeatures}
+          email = {this.state.email}
+          time = {this.state.time}
+          pace = {this.state.pace}
+          features = {this.state.features}
+          submit = {this.submit}
+        />}
+        <br />
+        {!this.state.signin && <div>
+        <MapContainer
+          latitude = {this.state.latitude}
+          longitude = {this.state.longitude}
+        />
+
+        <br />
+        <Notes
+          latitude = {this.state.latitude}
+          longitude = {this.state.longitude}
+          setBlobs = {this.setBlobs}
+        />
+
+        <br />
+         <Container>
+          <Row>
+            <Col xl="2"></Col>
+            <Col style={{display: 'flex', justifyContent: 'center'}} >
+              <Button size="lg" color="primary" block onClick={()=>this.setState({signin: true})}>Finish My Stroll!</Button>
+            </Col>
+            <Col xl="2"></Col>
+          </Row>
+        </Container>
+        </div>}
+        <br />
+        <br />
+      </div>
     );
   }
 }
