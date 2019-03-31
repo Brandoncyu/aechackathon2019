@@ -1,4 +1,6 @@
 
+![first path](assets/screenshots/tree.png)
+
 # Stroll
 
 TT AEC Hackathon 2019 - Seattle
