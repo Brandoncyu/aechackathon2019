@@ -69,15 +69,22 @@ class RouteData {
       grid.features.map(o2 => {
         let id2 = String(o2.geometry.coordinates[0]) + '-' + String(o2.geometry.coordinates[1]);
         let distance = turf.distance(o1.geometry.coordinates, o2.geometry.coordinates);
-        
+
+        //console.log(distance);
         // if distance is within threshold, check nature metrics
         if (distance != 0 && distance < linkTolerance) {
           graph.addLink(id, id2);
-          let a = o2.geometry.coordinates[0];
-          let b = o2.geometry.coordinates[1];
-          ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
-            console.log(result);
-          }).catch(err => console.error(err))
+
+          let temp = new Promise(function (resolve, reject) {
+            ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
+              resolve(result);
+            }).catch(err => console.error(err))
+          });
+
+          temp.then(x => {
+            console.log(x);
+            graph.addLink(id, id2, {nature: x});
+          });
         }
       });
     });
