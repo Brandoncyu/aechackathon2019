@@ -63,8 +63,15 @@ class RouteData {
           let idA = String(o.idA[0]) + '-' + String(o.idA[1]);
           let idB = String(o.idB[0]) + '-' + String(o.idB[1]);
 
+          graph.addNode(idA, {x: +o.idA[0], y: +o.idA[1]});
+
+          let dx = (+o.idA[0]) - (+o.idB[0])
+          let dy = (+o.idA[1]) - (+o.idB[1]);
+
           graph.addLink(idA, idB, {
-            greenScore: o.greenScore
+            greenScore: o.greenScore,
+            dist: Math.sqrt(dx * dx + dy * dy),
+            dist2: o.distance
           });
         });
 
@@ -105,7 +112,8 @@ class RouteData {
               let returnObj = {
                 idA: o1.geometry.coordinates,
                 idB: o2.geometry.coordinates,
-                greenScore: 1 - (+result)
+                greenScore: 1 - (+result),
+                distance: distance,
               };
               resolve(returnObj);
             }).catch(err => console.error(err))
