@@ -13,9 +13,9 @@ import {
 const InitialForm = ({editState, editFeatures, email, time, pace, features, submit}) => {
   return (<Container fluid={true}>
     <Row>
-      <Col xl="3"></Col>
+      <Col xl="0"></Col>
       {/* Adam -  I Added this class */}
-      <Col class="contact">
+      <Col xl="12" className="contact">
       {/* Adam -  I added the Post and Send */}
         <Form className="p-4" id="initial-form" onSubmit={submit} method="POST" action="send">
           <FormGroup>
@@ -45,7 +45,7 @@ const InitialForm = ({editState, editFeatures, email, time, pace, features, subm
           <Button type="submit" color="primary">Find Your Route!</Button>
         </Form>
       </Col>
-      <Col xl="3"></Col>
+      <Col xl="0"></Col>
     </Row>
   </Container>)
 }

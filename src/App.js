@@ -225,7 +225,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1 id ="title">Stroll</h1>
+        <span><h1 id ="title">Stroll</h1></span>
+        {/* <span><h5>go take a walk</h5></span> */}
+        
         {this.state.signin && <InitialForm
           editState = {this.editState}
           editFeatures = {this.editFeatures}
@@ -242,7 +244,7 @@ class App extends Component {
           longitude = {this.state.longitude}
         />
 
-        <br />
+        <br /><br />
         <Notes
           latitude = {this.state.latitude}
           longitude = {this.state.longitude}

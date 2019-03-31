@@ -39,8 +39,8 @@ class Notes extends Component {
 
   render(){
     return (<Container fluid={true}>
-      <Row>
-        <Col xl="3"></Col>
+      <Row className="Notes">
+        <Col xl="0"></Col>
         <Col xl="6" >
           <Form className="p-4" id="initial-form">
             <h3>Record Your Thoughts</h3>
@@ -56,7 +56,7 @@ class Notes extends Component {
             <Button color="primary" onClick={this.stopRecording}>Stop</Button>
           </Form>
         </Col>
-        <Col xl="3"></Col>
+        <Col xl="0"></Col>
       </Row>
     </Container>
   )}
