@@ -40,6 +40,7 @@ const RouteData = require('./RouteData');
 let json = require('../graphData.json');
 let result = RouteData.FindTopNaturePaths(json);
 console.log(result);
+console.log(result);
 
 // graph.forEachLink(function(link) {
 //   console.log(link);

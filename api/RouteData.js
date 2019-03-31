@@ -243,7 +243,18 @@ class RouteData {
       })
     });
 
-    returnObj.sort((a, b) => (a.totalGreenScore < b.totalGreenScore) ? 1 : -1)
+    returnObj.sort((a, b) => (a.totalGreenScore < b.totalGreenScore) ? 1 : -1);
+
+    let topPathSimple = (returnObj[0].path).map(p=>{
+      return p.data;
+    })
+
+    fs.writeFile("data/pathData.json", JSON.stringify(topPathSimple), function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
     return returnObj;
   }
 
