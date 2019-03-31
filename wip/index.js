@@ -15,8 +15,16 @@ const RouteData = require('./RouteData');
 // let points = RouteData.GetPointGrid(-90.548630, 14.616599, 1, 0.1);
 // console.log(points);
 
-let temp = RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6);
-console.log(temp);
+// RouteData.GetGraphData(47.660273, -122.409887, 1, 0.5, 0.6).then(x => {
+//   console.log(x);
+//   console.log(x);
+// });
+
+let graph = RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6);
+
+console.log(graph);
+
+
 // RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6).then(result => {
 //   console.log(result);
 // })

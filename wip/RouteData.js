@@ -43,7 +43,7 @@ class RouteData {
     return grid;
   }
 
-  /**
+   /**
    * Get graph object representing the points which are walkable given an origin lat/long, radius, and
    * distance between points for creation of a grid.
    * @param {String} lat Latitude of location.
@@ -54,42 +54,66 @@ class RouteData {
    * @returns {Graph} A ngraph.graph object.
    */
   static GetGraph(lat, long, radius, pointDist, linkTolerance) {
-    let graph = createGraph();
+    this.GetGraphData(lat, long, radius, pointDist, linkTolerance).then(r => {
+      let graph = createGraph();
+      r.map(o => {
+        let idA = String(o.idA[0]) + '-' + String(o.idA[1]);
+        let idB = String(o.idB[0]) + '-' + String(o.idB[1]);
+
+        graph.addLink(idA, idB, {
+          greenScore: o.greenScore
+        });
+      });
+
+      return graph;
+
+    }).catch(err => console.error(err));
+  }
+
+  /**
+   * Get graph data from the points which are walkable given an origin lat/long, radius, and
+   * distance between points for creation of a grid.
+   * @param {String} lat Latitude of location.
+   * @param {String} long Longitude of location.
+   * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {String} pointDist How far apart the points should be in the point grid.
+   * @param {String} linkTolerance The minimum distance between points to be considered a "link".
+   * @returns {Graph} A ngraph.graph object.
+   */
+  static async GetGraphData(lat, long, radius, pointDist, linkTolerance) {
     let grid = this.GetPointGrid(lat, long, radius, pointDist);
+    let promises = [];
 
     // add all points as nodes
     grid.features.map(o1 => {
       let id = String(o1.geometry.coordinates[0]) + '-' + String(o1.geometry.coordinates[1]);
-      graph.addNode(id, {
-        x: o1.geometry.coordinates[0],
-        y: o1.geometry.coordinates[1]
-      });
 
       // iterate over the same collection to get links between nodes based on distance
       grid.features.map(o2 => {
         let id2 = String(o2.geometry.coordinates[0]) + '-' + String(o2.geometry.coordinates[1]);
         let distance = turf.distance(o1.geometry.coordinates, o2.geometry.coordinates);
 
-        //console.log(distance);
+        // console.log(distance);
         // if distance is within threshold, check nature metrics
         if (distance != 0 && distance < linkTolerance) {
-          graph.addLink(id, id2);
 
           let temp = new Promise(function (resolve, reject) {
             ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
-              resolve(result);
+              // graph.addLink('a', 'b', {weight: 10});
+              let returnObj = {
+                idA: o1.geometry.coordinates,
+                idB: o2.geometry.coordinates,
+                greenScore: result
+              };
+              resolve(returnObj);
             }).catch(err => console.error(err))
           });
-
-          temp.then(x => {
-            console.log(x);
-            graph.addLink(id, id2, {nature: x});
-          });
+          promises.push(temp);
         }
       });
     });
 
-    return graph;
+    return Promise.all(promises);
   }
 
   static FindPath(graph) {
