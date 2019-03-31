@@ -245,17 +245,21 @@ class RouteData {
 
     returnObj.sort((a, b) => (a.totalGreenScore < b.totalGreenScore) ? 1 : -1);
 
-    let topPathSimple = (returnObj[0].path).map(p=>{
-      return p.data;
-    })
+    let topPathSimple = returnObj.map(p=>{
+      console.log(p);
+      let data = p.path.map( n=> {
+        return n.data;
+      })
+      return data;
+    });
 
-    fs.writeFile("data/pathData.json", JSON.stringify(topPathSimple), function (err) {
+    fs.writeFile("data/pathData.json", JSON.stringify(topPathSimple[0]), function (err) {
       if (err) {
         console.log(err);
       }
     });
 
-    return returnObj;
+    return topPathSimple;
   }
 
 }
