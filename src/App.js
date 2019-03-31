@@ -5,7 +5,6 @@ import InitialForm from './components/InitialForm'
 import Notes from './components/Notes'
 import {
   Button,
-  Form,
   Container,
   Row,
   Col,
@@ -17,11 +16,12 @@ class App extends Component {
     this.state = {
       email: '',
       time: '',
-      pace: 'slow',
+      pace: 0,
       features: [],
       latitude: '',
       longitude: '',
-      blobs: []
+      blobs: [],
+      distance: ''
     }
     this.getMyLocation = this.getMyLocation.bind(this)
   }
@@ -65,6 +65,14 @@ class App extends Component {
     })
   }
 
+  submit = (e) => {
+    e.preventDefault()
+    let distance = (Number(this.state.time) * Number(this.state.pace))/120
+    this.setState({
+      distance
+    })
+  }
+
   setBlobs = (blobURL) => {
     this.getMyLocation()
     let date = new Date()
@@ -88,6 +96,7 @@ class App extends Component {
           time = {this.state.time}
           pace = {this.state.pace}
           features = {this.state.features}
+          submit = {this.submit}
         />
         <br></br>
         <Notes

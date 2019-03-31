@@ -43,7 +43,7 @@ class Notes extends Component {
     return (<Container fluid={true}>
       <Row>
         <Col xl="3"></Col>
-        <Col xl="6">
+        <Col xl="6" >
           <Form className="p-4" id="initial-form">
               <ReactMic
                 record={this.state.record}
