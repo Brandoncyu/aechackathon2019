@@ -10,7 +10,9 @@ const ColorParse = require('./ColorParse');
 //   console.log(result);
 // })
 
-ColorParse.GetPaletteAnalysis(46.414382, 10.013988).then(result => {
-  console.log(result);
-  console.log(result);
-})
+// ColorParse.GetPaletteAnalysis(47.660259, -122.408417).then(result => {
+//   console.log(result);
+//   console.log(result);
+// })
+
+ColorParse.GetAverageColor();

@@ -100,10 +100,24 @@ class ColorParse {
         var count = merged.reduce(function (n, val) {
           return n + (val === 'Green');
         }, 0);
-        resolve(count/merged.length);
+        resolve(count / merged.length);
       });
     });
   }
+
+  // static GetAverageColor() {
+  //   var getPixels = require("get-pixels")
+
+  //   getPixels("https://maps.googleapis.com/maps/api/streetview?size=600x300&location=47.660259,%20-122.408417&heading=180&pitch=0&key=AIzaSyBiwsS0P3PVv4dr2sTs61i_9d-ICOsmSgw", function (err, pixels) {
+  //     if (err) {
+  //       console.log("Bad image path")
+  //       return
+  //     }
+  //     console.log("got pixels", pixels);
+  //     console.log("got pixels", pixels);
+
+  //   })
+  // }
 
   /**
    * Get the closest color hue name to the input color in hex format.
