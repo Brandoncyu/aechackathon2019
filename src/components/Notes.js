@@ -44,17 +44,19 @@ class Notes extends Component {
       <Row>
         <Col xl="3"></Col>
         <Col xl="6" >
+
           <Form className="p-4" id="initial-form">
-              <ReactMic
-                record={this.state.record}
-                className="sound-wave"
-                onStop={this.onStop}
-                onData={this.onData}
-                strokeColor="#000000"
-                backgroundColor="#FFFFFF" />
-              <br />
-              <Button color="primary" onClick={this.startRecording}>Start</Button>
-              <Button color="primary" onClick={this.stopRecording}>Stop</Button>
+            <h3>Record Your Thoughts</h3>
+            <ReactMic
+              record={this.state.record}
+              className="sound-wave"
+              onStop={this.onStop}
+              onData={this.onData}
+              strokeColor="#000000"
+              backgroundColor="#FFFFFF" />
+            <br />
+            <Button color="primary" onClick={this.startRecording}>Start</Button>
+            <Button color="primary" onClick={this.stopRecording}>Stop</Button>
           </Form>
 
         </Col>

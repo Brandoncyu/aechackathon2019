@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InitialForm from './components/InitialForm'
+import MapContainer from './components/MapContainer'
 import Notes from './components/Notes'
 import {
   Button,
@@ -21,7 +22,8 @@ class App extends Component {
       latitude: '',
       longitude: '',
       blobs: [],
-      distance: ''
+      distance: '',
+      signin: true
     }
     this.getMyLocation = this.getMyLocation.bind(this)
   }
@@ -69,7 +71,8 @@ class App extends Component {
     e.preventDefault()
     let distance = (Number(this.state.time) * Number(this.state.pace))/120
     this.setState({
-      distance
+      distance,
+      signin: false
     })
   }
 
@@ -89,7 +92,7 @@ class App extends Component {
     return (
       <div>
         <h1 id ="title">Stroll</h1>
-        <InitialForm
+        {this.state.signin && <InitialForm
           editState = {this.editState}
           editFeatures = {this.editFeatures}
           email = {this.state.email}
@@ -97,15 +100,23 @@ class App extends Component {
           pace = {this.state.pace}
           features = {this.state.features}
           submit = {this.submit}
+        />}
+        <br />
+        {!this.state.signin && <div>
+        <MapContainer
+          latitude = {this.state.latitude}
+          longitude = {this.state.longitude}
         />
-        <br></br>
+
+        <br />
         <Notes
           latitude = {this.state.latitude}
           longitude = {this.state.longitude}
           setBlobs = {this.setBlobs}
         />
+
         <br />
-        <Container>
+         <Container>
           <Row>
             <Col xl="2"></Col>
             <Col style={{display: 'flex', justifyContent: 'center'}} >
@@ -114,6 +125,7 @@ class App extends Component {
             <Col xl="2"></Col>
           </Row>
         </Container>
+        </div>}
         <br />
         <br />
       </div>
