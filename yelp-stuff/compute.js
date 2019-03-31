@@ -22,14 +22,14 @@ rhino3dm().then((rhino) => {
     
     //Get sun Position as XYZ
     //sun=sunPos.CalcPos();
-    sun=[450,300,0]
+    sun=[450,100,0]
 
 
     //Get the analysis Path and convert to points
     path = new rhino.Polyline();
     path.add(200, 0, 0);
-    path.add(200, 200, 0);
-    numPt = 20;
+    path.add(150, 400, 0);
+    numPt = 5;
     for (let i = 0; i < numPt; i++) {
         let pt = path.pointAt(i / numPt);
         pathPts.push(pt);
@@ -60,9 +60,9 @@ rhino3dm().then((rhino) => {
     }
 
      //intersect sun rays
-     for(let j=0;j<bldgs.polylines.length;j++){
+     for (let j = 0; j < bldgs.polylines.length; j++){
         for (let i = 0; i < Rays.length; i++) {
-            createIntersection(bldgs.polylines[j],Rays[i]);
+            console.log(createIntersection(bldgs.polylines[j],Rays[i]));
         }
      }
     
@@ -81,8 +81,8 @@ async function createIntersection(curveA,curveB) {
   
       // deserialise opennurbs curves individually
       for (let i=0; i<res.length; i++) {
-        Intersections.push(curveB.toNurbsCurve().pointAt(res[i].ParameterB));
-        console.log(curveB.toNurbsCurve().pointAt(res[i].ParameterB));
+        Intersections.push(curveA.toNurbsCurve().pointAt(res[i].ParameterA));
+        console.log(curveA.toNurbsCurve().pointAt(res[i].ParameterA));
       }
 
       draw();
