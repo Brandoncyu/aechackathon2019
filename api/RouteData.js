@@ -139,7 +139,7 @@ class RouteData {
     return Promise.all(promises);
   }
 
-  static FindPath(graph) {
+  static FindPath(graph, idA, idB) {
     let pathFinder = path.aStar(graph, {
       distance(fromNode, toNode, link) {
 
@@ -149,8 +149,8 @@ class RouteData {
 
         let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
 
-        if (overallScore < 0) {
-          return 0;
+        if (overallScore < 1) {
+          return 1;
         } else {
           return overallScore
         }
@@ -159,14 +159,14 @@ class RouteData {
       heuristic(fromNode, toNode, link) {
         let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
 
-        if (overallScore < 0) {
-          return 0;
+        if (overallScore < 1) {
+          return 1;
         } else {
           return overallScore
         }
       }
     });
-    return pathFinder.find('NYC', 'Washington');
+    return pathFinder.find(idA, idB);
   }
 
 }

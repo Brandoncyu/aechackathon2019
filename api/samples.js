@@ -17,7 +17,6 @@ const RouteData = require('./RouteData');
 
 // RouteData.GetGraphData(47.660273, -122.409887, 1, 0.5, 0.6).then(x => {
 //   console.log(x);
-//   console.log(x);
 // });
 
 RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6).then(x => {
