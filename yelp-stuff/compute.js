@@ -13,8 +13,13 @@ var path = null;
 var pathPts = [];
 let sun = null;
 let Rays=[];
+let Intersections=[];
+
+// pop up a dialog asking the user to authorise the compute client
+RhinoCompute.authToken = RhinoCompute.getAuthToken(true);
 
 rhino3dm().then((rhino) => {
+    
     //Get sun Position as XYZ
     //sun=sunPos.CalcPos();
     sun=[450,300,0]
@@ -32,16 +37,16 @@ rhino3dm().then((rhino) => {
 
     //Create the first building footprint
     polyline = new rhino.Polyline();
-    polyline.add(0, 0, 0);
-    polyline.add(100, 0, 0);
-    polyline.add(100, 100, 0);
-    polyline.add(0, 100, 0);
+    polyline.add(200, 200, 0);
+    polyline.add(300, 200, 0);
+    polyline.add(300, 300, 0);
+    polyline.add(200, 300, 0);
     bldgs.polylines.push(polyline)
 
     //create the second building footprint
     polyline = new rhino.Polyline();
-    polyline.add(300, 200, 0);
-    polyline.add(400, 200, 0);
+    polyline.add(300, 150, 0);
+    polyline.add(400, 150, 0);
     polyline.add(400, 100, 0);
     polyline.add(300, 100, 0);
     bldgs.polylines.push(polyline)
@@ -54,12 +59,40 @@ rhino3dm().then((rhino) => {
         Rays.push(polyline);
     }
 
-    draw();
+     //intersect sun rays
+     for(let j=0;j<bldgs.polylines.length;j++){
+        for (let i = 0; i < Rays.length; i++) {
+            createIntersection(bldgs.polylines[j],Rays[i]);
+        }
+     }
+    
+   
     console.log(bldgs.polylines.length)
 })
 
+async function createIntersection(curveA,curveB) {
+    let unionCurves = [];
+  
+    // catch errors in the compute call and deserialisation
+    try {
+      // send curves to compute for boolean union operation
+      
+      let res = await RhinoCompute.Intersection.curveCurve(curveA.toNurbsCurve(), curveB.toNurbsCurve(), 0.01, 0.01, multiple=false)
+  
+      // deserialise opennurbs curves individually
+      for (let i=0; i<res.length; i++) {
+        Intersections.push(curveB.toNurbsCurve().pointAt(res[i].ParameterB));
+        console.log(curveB.toNurbsCurve().pointAt(res[i].ParameterB));
+      }
 
-
+      draw();
+    } catch (e) {
+      // log errors to console
+      console.error(e);
+    }
+  
+  
+    }
 
 // /* * * * * * * * * * * * * * * * *  drawing   * * * * * * * * * * * * * * * * */
 function getCanvas() {
@@ -82,8 +115,13 @@ function draw() {
     }
     
     //draw path points
-    for (let i = 0; i < pathPts.length; i++) {
-        drawCircle(ctx,pathPts[i])
+    // for (let i = 0; i < pathPts.length; i++) {
+    //     drawCircle(ctx,pathPts[i])
+    // }
+
+    //draw intersection points
+    for (let i = 0; i < Intersections.length; i++) {
+        drawCircle(ctx,Intersections[i])
     }
 
     //draw sun rays
