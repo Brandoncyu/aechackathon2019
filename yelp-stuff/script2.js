@@ -8,8 +8,6 @@ var loc = SunCalc.getPosition(Date.now(), 47.6694956, -122.31547389999999)
 console.log(loc);
 
 
-
-
 //calculate random points around current location
 var center = [-75.343, 39.984];
 var point = turf.point([-90.548630, 14.616599]);
