@@ -1,6 +1,7 @@
 const turf = require('turf');
 const turfrandom = require('@turf/random');
 let createGraph = require('ngraph.graph');
+let path = require('ngraph.path');
 
 const ColorParse = require('./ColorParse');
 const YelpData = require('./YelpData');
@@ -120,7 +121,8 @@ class RouteData {
                   let returnObj = {
                     idA: o1.geometry.coordinates,
                     idB: o2.geometry.coordinates,
-                    greenScore: 1 - (+result),
+                    // greenScore: 1 - (+result),
+                    greenScore: +result,
                     parkScore: result2.length,
                     distance: distance,
                   };
@@ -138,20 +140,30 @@ class RouteData {
   }
 
   static FindPath(graph) {
-    let pathFinder = aStar(graph, {
-      distance(fromNode, toNode) {
+    let pathFinder = path.aStar(graph, {
+      distance(fromNode, toNode, link) {
 
-        // let dx = fromNode.data.x - toNode.data.x;
-        // let dy = fromNode.data.y - toNode.data.y;
-        // return Math.sqrt(dx * dx + dy * dy);
-        return link.data.greenScore;
-      },
-      heuristic(fromNode, toNode) {
-        // this is where we "guess" distance between two nodes.
         let dx = fromNode.data.x - toNode.data.x;
         let dy = fromNode.data.y - toNode.data.y;
+        let distance =  Math.sqrt(dx * dx + dy * dy);
 
-        return Math.sqrt(dx * dx + dy * dy);
+        let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
+
+        if (overallScore < 0) {
+          return 0;
+        } else {
+          return overallScore
+        }
+
+      },
+      heuristic(fromNode, toNode, link) {
+        let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
+
+        if (overallScore < 0) {
+          return 0;
+        } else {
+          return overallScore
+        }
       }
     });
     return pathFinder.find('NYC', 'Washington');
