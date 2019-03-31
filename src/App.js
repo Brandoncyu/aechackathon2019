@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import InitialForm from './components/InitialForm'
+import Notes from './components/Notes'
 import {
   Button,
   Form,
-  FormGroup,
-  Label,
   Container,
   Row,
   Col,
-  Input
 } from 'reactstrap'
-import InitialForm from './components/InitialForm'
-import Notes from './components/Notes'
 
 class App extends Component {
   constructor(props){
@@ -23,7 +20,8 @@ class App extends Component {
       pace: 'slow',
       features: [],
       latitude: '',
-      longitude: ''
+      longitude: '',
+      blobs: []
     }
     this.getMyLocation = this.getMyLocation.bind(this)
   }
@@ -67,6 +65,18 @@ class App extends Component {
     })
   }
 
+  setBlobs = (blobURL) => {
+    this.getMyLocation()
+    let date = new Date()
+    let latitude = this.state.latitude
+    let longitude = this.state.longitude
+    let newBlob = {date, blobURL, latitude, longitude}
+    let blobs = [ ...this.state.blobs, newBlob ]
+    this.setState({
+      blobs
+    })
+  }
+
   render() {
     return (
       <div>
@@ -83,8 +93,20 @@ class App extends Component {
         <Notes
           latitude = {this.state.latitude}
           longitude = {this.state.longitude}
-          getMyLocation = {this.getMyLocation}
+          setBlobs = {this.setBlobs}
         />
+        <br />
+        <Container>
+          <Row>
+            <Col xl="2"></Col>
+            <Col style={{display: 'flex', justifyContent: 'center'}} >
+              <Button size="lg" color="primary" block>Finish My Stroll!</Button>
+            </Col>
+            <Col xl="2"></Col>
+          </Row>
+        </Container>
+        <br />
+        <br />
       </div>
     );
   }
