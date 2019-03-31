@@ -1,7 +1,7 @@
 const apiKey = '6NYOaiq8v9lYb4anGkNvmrRxSKejVfIlvJZjHkK__IQv2uAcn8xBp_6yW58coOfuUMwpp1Tjmmy3hUTjJ65DKOfuE8GF3qvwZPMDirzf88MWTPRbN2uNOI7hvb2fXHYx';
 const yelp = require('yelp-fusion');
 
-class YelpParks {
+class YelpData {
   constructor() {}
 
   static ParkSearch(lat, long) {
@@ -31,4 +31,4 @@ class YelpParks {
 
 }
 
-module.exports = YelpParks;
+module.exports = YelpData;
