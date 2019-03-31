@@ -2,10 +2,18 @@ const ColorParse = require('./ColorParse');
 const StreetData = require('./StreetData');
 const YelpData = require('./YelpData');
 const WeatherData = require('./WeatherData');
+const RouteData = require('./RouteData');
 
-YelpData.ParkSearch(47.6694956, -122.31547389999999).then(d => {
-  console.log(d);
-});
+
+// YelpData.ParkSearch(47.6694956, -122.31547389999999).then(d => {
+//   console.log(d);
+// });
+
+// let points = RouteData.GetRandomPointGrid(-90.548630, 14.616599, 1, 10);
+// console.log(points);
+
+let points = RouteData.GetPointGrid(-90.548630, 14.616599, 1, 0.1);
+console.log(points);
 
 // let sunData = WeatherData.GetSunPositionToday(47.6694956, -122.31547389999999);
 // console.log(sunData);
