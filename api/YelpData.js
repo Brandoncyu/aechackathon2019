@@ -4,11 +4,19 @@ const yelp = require('yelp-fusion');
 class YelpData {
   constructor() {}
 
-  static ParkSearch(lat, long) {
+    /**
+   * Get a collection of public parks from Yelp within the given radius from the origin lat/long point.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
+   * @returns {Array} A collection of nearby parks.
+   */
+  static ParkSearch(lat, long, radius) {
     const searchRequest = {
       term: 'park',
       latitude: lat,
-      longitude: long
+      longitude: long,
+      radius: radius
     };
 
     const client = yelp.client(apiKey);

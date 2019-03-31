@@ -10,9 +10,9 @@ class RouteData {
   /**
    * Get a collection of random points which fall within a given bounding radius from an origin
    * lat/long point.
-   * @param {String} lat Latitude of location.
-   * @param {String} long Longitude of location.
-   * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
    * @param {String} numPoints How many points to return
    * @returns {Array} A collection of Turf.JS points.
    */
@@ -28,10 +28,10 @@ class RouteData {
   /**
    * Get a collection of points in a gird which fall within a given bounding radius from an origin
    * lat/long point.
-   * @param {String} lat Latitude of location.
-   * @param {String} long Longitude of location.
-   * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
-   * @param {String} pointDist How far apart the points should be in the point grid.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {Number} pointDist How far apart the points should be in the point grid.
    * @returns {Array} A collection of Turf.JS points.
    */
   static GetPointGrid(lat, long, radius, pointDist) {
@@ -46,10 +46,10 @@ class RouteData {
   /**
    * Get graph object representing the points which are walkable given an origin lat/long, radius, and
    * distance between points for creation of a grid.
-   * @param {String} lat Latitude of location.
-   * @param {String} long Longitude of location.
-   * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
-   * @param {String} pointDist How far apart the points should be in the point grid.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {Number} pointDist How far apart the points should be in the point grid.
    * @param {String} linkTolerance The minimum distance between points to be considered a "link".
    * @returns {Graph} A ngraph.graph object.
    */
@@ -84,10 +84,10 @@ class RouteData {
   /**
    * Get graph data from the points which are walkable given an origin lat/long, radius, and
    * distance between points for creation of a grid.
-   * @param {String} lat Latitude of location.
-   * @param {String} long Longitude of location.
-   * @param {String} radius The radius of the bounding geometry from the given lat/long origin.
-   * @param {String} pointDist How far apart the points should be in the point grid.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {Number} pointDist How far apart the points should be in the point grid.
    * @param {String} linkTolerance The minimum distance between points to be considered a "link".
    * @returns {Object} A ngraph.graph object.
    */

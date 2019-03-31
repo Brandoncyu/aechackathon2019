@@ -5,8 +5,10 @@ const WeatherData = require('./WeatherData');
 const RouteData = require('./RouteData');
 
 
-YelpData.ParkSearch(47.660273, -122.409887).then(d => {
+YelpData.ParkSearch(47.660273, -122.409887, 1000).then(d => {
   console.log(d);
+  console.log(d);
+
 });
 
 // let points = RouteData.GetRandomPointGrid(-90.548630, 14.616599, 1, 10);
