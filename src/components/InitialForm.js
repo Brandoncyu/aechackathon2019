@@ -14,8 +14,10 @@ const InitialForm = ({editState, editFeatures, email, time, pace, features, subm
   return (<Container fluid={true}>
     <Row>
       <Col xl="3"></Col>
-      <Col>
-        <Form className="p-4" id="initial-form" onSubmit={submit}>
+      {/* Adam -  I Added this class */}
+      <Col class="contact">
+      {/* Adam -  I added the Post and Send */}
+        <Form className="p-4" id="initial-form" onSubmit={submit} method="POST" action="send">
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <Input type="email" name="email" id="email" placeholder="Verify your email address" value={email} onChange={editState} />
@@ -40,7 +42,7 @@ const InitialForm = ({editState, editFeatures, email, time, pace, features, subm
               <option value="shade">Shade</option>
             </Input>
           </FormGroup>
-          <Button color="primary">Find Your Route!</Button>
+          <Button type="submit" color="primary">Find Your Route!</Button>
         </Form>
       </Col>
       <Col xl="3"></Col>
