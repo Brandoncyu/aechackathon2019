@@ -3,6 +3,7 @@ const turfrandom = require('@turf/random');
 let createGraph = require('ngraph.graph');
 
 const ColorParse = require('./ColorParse');
+const YelpData = require('./YelpData');
 
 class RouteData {
   constructor() {}
@@ -108,7 +109,6 @@ class RouteData {
 
           let temp = new Promise(function (resolve, reject) {
             ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
-              // graph.addLink('a', 'b', {weight: 10});
               let returnObj = {
                 idA: o1.geometry.coordinates,
                 idB: o2.geometry.coordinates,
