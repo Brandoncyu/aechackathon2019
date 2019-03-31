@@ -3,12 +3,9 @@ import { ReactMic } from 'react-mic';
 import {
   Button,
   Form,
-  FormGroup,
-  Label,
   Container,
   Row,
   Col,
-  Input
 } from 'reactstrap'
 
 class Notes extends Component {
@@ -16,7 +13,6 @@ class Notes extends Component {
     super(props);
     this.state = {
       record: false,
-      blobs: [],
     }
   }
 
@@ -40,18 +36,7 @@ class Notes extends Component {
 
   onStop = (recordedBlob) => {
     // console.log('recordedBlob is: ', recordedBlob);
-    this.props.getMyLocation()
-
-    let date = new Date()
-    let blobURL = recordedBlob.blobURL
-    let latitude = this.props.latitude
-    let longitude = this.props.longitude
-    let newBlob = {date, blobURL, latitude, longitude}
-    let newBlobs = [ ...this.state.blobs, newBlob ]
-    console.log(newBlobs)
-    this.setState({
-      blobs: newBlobs
-    })
+    this.props.setBlobs(recordedBlob.blobURL)
   }
 
   render(){
