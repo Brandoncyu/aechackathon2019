@@ -1,12 +1,11 @@
 const apiKey = '6NYOaiq8v9lYb4anGkNvmrRxSKejVfIlvJZjHkK__IQv2uAcn8xBp_6yW58coOfuUMwpp1Tjmmy3hUTjJ65DKOfuE8GF3qvwZPMDirzf88MWTPRbN2uNOI7hvb2fXHYx';
 const yelp = require('yelp-fusion');
+const googleDist = require('./googleDist');
 
 class YelpParks {
   constructor() { }
 
-  static BuildRequest() {
-
-  }
+ 
 
   static ParkSearch(lat, long) {
     const searchRequest = {
@@ -28,8 +27,10 @@ class YelpParks {
       return {
         name: r.name,
         rating: r.rating,
-        coordinates: r.coordinates
+        coordinates: r.coordinates,
+     //dist: googleDist.PointDist(searchRequest.latitude, searchRequest.longitude, r.coordinates.latitude, r.coordinates.longitude)
       }
+     
      });
 
       const prettyJson = JSON.stringify(parkData, null, 4);

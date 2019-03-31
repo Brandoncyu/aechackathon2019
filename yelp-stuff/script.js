@@ -7,5 +7,3 @@ let long = -122.31547389999999
 
 YelpParks.ParkSearch(lat,long);
 
-
-

@@ -3,10 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@google/maps": "^0.5.5",
+    "@turf/buffer": "^5.1.5",
+    "@turf/circle": "^6.0.1",
+    "@turf/collect": "^6.0.1",
+    "@turf/random": "^6.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0",
+    "suncalc": "^1.8.0",
+    "turf": "^3.0.14",
     "yelp-fusion": "^2.2.1"
   },
   "scripts": {
