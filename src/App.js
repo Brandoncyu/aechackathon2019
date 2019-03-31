@@ -120,7 +120,7 @@ class App extends Component {
           <Row>
             <Col xl="2"></Col>
             <Col style={{display: 'flex', justifyContent: 'center'}} >
-              <Button size="lg" color="primary" block>Finish My Stroll!</Button>
+              <Button size="lg" color="primary" block onClick={()=>this.setState({signin: true})}>Finish My Stroll!</Button>
             </Col>
             <Col xl="2"></Col>
           </Row>

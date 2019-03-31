@@ -16,8 +16,6 @@ class Notes extends Component {
     }
   }
 
-
-
   startRecording = () => {
     this.setState({
       record: true
@@ -44,7 +42,6 @@ class Notes extends Component {
       <Row>
         <Col xl="3"></Col>
         <Col xl="6" >
-
           <Form className="p-4" id="initial-form">
             <h3>Record Your Thoughts</h3>
             <ReactMic
@@ -58,7 +55,6 @@ class Notes extends Component {
             <Button color="primary" onClick={this.startRecording}>Start</Button>
             <Button color="primary" onClick={this.stopRecording}>Stop</Button>
           </Form>
-
         </Col>
         <Col xl="3"></Col>
       </Row>
