@@ -1,16 +1,16 @@
 #initial-form {
   /* background-color: rgba(0, 0, 0, 0.5); */
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url('./form-background.png');
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url('./form-background.png');
   color: white;
   border-style: solid;
-  border-radius: 25px;
+  border-radius: 25px; */
 }
 
-#map {
+/* #map {
   border-style: solid;
   border-radius: 25px;
   border-color: white
-}
+} */
 
 #map-title {
   color: white
@@ -18,11 +18,20 @@
 
 #title {
   font-size: 100px;
-  color: white;
-  text-shadow: 2px 2px black;
+  color: rgb(233, 233, 233);
+  /* text-shadow: 2px 2px black; */
+  margin-left: 20px;
 }
 
 .sound-wave {
   height: 80px;
-  width: 340px;
+  width: 320px;
+}
+
+.finishButton {
+  width: 360px !important;
+}
+
+.notesPanel{
+  padding: 3px !important;
 }
