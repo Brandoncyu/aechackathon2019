@@ -1,10 +1,16 @@
 const apiKey = '6NYOaiq8v9lYb4anGkNvmrRxSKejVfIlvJZjHkK__IQv2uAcn8xBp_6yW58coOfuUMwpp1Tjmmy3hUTjJ65DKOfuE8GF3qvwZPMDirzf88MWTPRbN2uNOI7hvb2fXHYx';
 const yelp = require('yelp-fusion');
+var Bottleneck = require("bottleneck/es5");
+
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
+  minTime: 300
+});
 
 class YelpData {
   constructor() {}
 
-    /**
+  /**
    * Get a collection of public parks from Yelp within the given radius from the origin lat/long point.
    * @param {Number} lat Latitude of location.
    * @param {Number} long Longitude of location.
@@ -12,29 +18,35 @@ class YelpData {
    * @returns {Array} A collection of nearby parks.
    */
   static ParkSearch(lat, long, radius) {
-    const searchRequest = {
-      term: 'park',
-      latitude: lat,
-      longitude: long,
-      radius: radius
-    };
+    try {
+      const searchRequest = {
+        term: 'park',
+        latitude: lat,
+        longitude: long,
+        radius: radius
+      };
 
-    const client = yelp.client(apiKey);
-    return new Promise(function (resolve, reject) {
+      const client = yelp.client(apiKey);
+      return new Promise(function (resolve, reject) {
 
-      client.search(searchRequest).then(response => {
-        let results = response.jsonBody.businesses
+        limiter.schedule(() => client.search(searchRequest))
+          // client.search(searchRequest)
+          .then(response => {
+            let results = response.jsonBody.businesses
 
-        let parkData = results.map(r => {
-          return {
-            name: r.name,
-            rating: r.rating,
-            coordinates: r.coordinates,
-          }
-        });
-        resolve(parkData);
-      }).catch(e => console.error(e));
-    });
+            let parkData = results.map(r => {
+              return {
+                name: r.name,
+                rating: r.rating,
+                coordinates: r.coordinates,
+              }
+            });
+            resolve(parkData);
+          });
+      });
+    } catch {
+      return [];
+    }
   }
 
 }

@@ -64,13 +64,17 @@ class RouteData {
           let idA = String(o.idA[0]) + '-' + String(o.idA[1]);
           let idB = String(o.idB[0]) + '-' + String(o.idB[1]);
 
-          graph.addNode(idA, {x: +o.idA[0], y: +o.idA[1]});
+          graph.addNode(idA, {
+            x: +o.idA[0],
+            y: +o.idA[1]
+          });
 
           let dx = (+o.idA[0]) - (+o.idB[0])
           let dy = (+o.idA[1]) - (+o.idB[1]);
 
           graph.addLink(idA, idB, {
             greenScore: o.greenScore,
+            parkScore: o.parkScore,
             dist: Math.sqrt(dx * dx + dy * dy),
             dist2: o.distance
           });
@@ -109,14 +113,21 @@ class RouteData {
 
           let temp = new Promise(function (resolve, reject) {
             ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
-              let returnObj = {
-                idA: o1.geometry.coordinates,
-                idB: o2.geometry.coordinates,
-                greenScore: 1 - (+result),
-                distance: distance,
-              };
-              resolve(returnObj);
-            }).catch(err => console.error(err))
+
+              // limiter.schedule(() => YelpData.ParkSearch(+o2.geometry.coordinates[0], +o2.geometry.coordinates[1], 500))
+              YelpData.ParkSearch(47.660273, -122.409887, 500)
+                .then(result2 => {
+                  let returnObj = {
+                    idA: o1.geometry.coordinates,
+                    idB: o2.geometry.coordinates,
+                    greenScore: 1 - (+result),
+                    parkScore: result2.length,
+                    distance: distance,
+                  };
+                  resolve(returnObj);
+                }).catch(err => console.error(err));
+
+            }).catch(err => console.error(err));
           });
           promises.push(temp);
         }

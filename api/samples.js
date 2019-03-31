@@ -5,11 +5,9 @@ const WeatherData = require('./WeatherData');
 const RouteData = require('./RouteData');
 
 
-YelpData.ParkSearch(47.660273, -122.409887, 1000).then(d => {
-  console.log(d);
-  console.log(d);
-
-});
+// YelpData.ParkSearch(47.660273, -122.409887, 1000).then(d => {
+//   console.log(d);
+// });
 
 // let points = RouteData.GetRandomPointGrid(-90.548630, 14.616599, 1, 10);
 // console.log(points);
@@ -22,19 +20,19 @@ YelpData.ParkSearch(47.660273, -122.409887, 1000).then(d => {
 //   console.log(x);
 // });
 
-// RouteData.GetGraph(47.660273, -122.409887, 1, 0.3, 0.4).then(x => {
-//   let nodes = [];
-//   // x.forEachLink(function (link) {
-//   //   console.log(link);
-//   // });
+RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6).then(x => {
+  let nodes = [];
+  
+  x.forEachLink(function (link) {
+    console.log(link);
+  });
 
-//   x.forEachNode(function (node) {
-//     console.log(node);
-//     nodes.push(node);
-//   });
+  // x.forEachNode(function (node) {
+  //   nodes.push(node);
+  // });
 
-//   console.log(nodes);
-// })
+  console.log(nodes);
+})
 
 // graph.forEachLink(function(link) {
 //   console.log(link);
