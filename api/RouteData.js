@@ -2,6 +2,7 @@ const turf = require('turf');
 const turfrandom = require('@turf/random');
 let createGraph = require('ngraph.graph');
 let path = require('ngraph.path');
+var fs = require('fs');
 
 const ColorParse = require('./ColorParse');
 const YelpData = require('./YelpData');
@@ -56,6 +57,7 @@ class RouteData {
    * @returns {Graph} A ngraph.graph object.
    */
   static GetGraph(lat, long, radius, pointDist, linkTolerance) {
+    console.log('Staring Get Graph');
     let self = this;
     return new Promise(function (resolve, reject) {
 
@@ -76,7 +78,7 @@ class RouteData {
           graph.addLink(idA, idB, {
             greenScore: o.greenScore,
             parkScore: o.parkScore,
-            dist: Math.sqrt(dx * dx + dy * dy),
+            dist: Math.abs(Math.sqrt(dx * dx + dy * dy)),
             dist2: o.distance
           });
         });
@@ -98,6 +100,7 @@ class RouteData {
    * @returns {Object} A ngraph.graph object.
    */
   static async GetGraphData(lat, long, radius, pointDist, linkTolerance) {
+    console.log('Staring Get Graph Data');
     let grid = this.GetPointGrid(lat, long, radius, pointDist);
     let promises = [];
 
@@ -116,7 +119,8 @@ class RouteData {
             ColorParse.GetPaletteAnalysis(o2.geometry.coordinates[0], o2.geometry.coordinates[1]).then(result => {
 
               // limiter.schedule(() => YelpData.ParkSearch(+o2.geometry.coordinates[0], +o2.geometry.coordinates[1], 500))
-              YelpData.ParkSearch(47.660273, -122.409887, 500)
+              // YelpData.ParkSearch(47.660273, -122.409887, 500)
+              YelpData.ParkSearch(+o2.geometry.coordinates[0], +o2.geometry.coordinates[1], 300)
                 .then(result2 => {
                   let returnObj = {
                     idA: o1.geometry.coordinates,
@@ -139,14 +143,17 @@ class RouteData {
     return Promise.all(promises);
   }
 
+  /**
+   * Find a path between two nodes on the graph, weighted by the "Green Score" weight of the nodes
+   * along the potential path.
+   * @param {Graph} graph A ngraph.graph object.
+   * @param {String} idA Node ID of start point.
+   * @param {String} idB Node ID of end point.
+   * @returns {Object} A ngraph.path object.
+   */
   static FindPath(graph, idA, idB) {
     let pathFinder = path.aStar(graph, {
       distance(fromNode, toNode, link) {
-
-        let dx = fromNode.data.x - toNode.data.x;
-        let dy = fromNode.data.y - toNode.data.y;
-        let distance =  Math.sqrt(dx * dx + dy * dy);
-
         let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
 
         if (overallScore < 1) {
@@ -157,16 +164,48 @@ class RouteData {
 
       },
       heuristic(fromNode, toNode, link) {
-        let overallScore = 10 - (link.data.greenScore * 10) - link.data.parkScore;
+        let dx = fromNode.data.x - toNode.data.x;
+        let dy = fromNode.data.y - toNode.data.y;
 
-        if (overallScore < 1) {
-          return 1;
-        } else {
-          return overallScore
-        }
+        return Math.sqrt(dx * dx + dy * dy);
       }
     });
     return pathFinder.find(idA, idB);
+  }
+
+  static FindNaturePath(lat, long, radius, pointDist, linkTolerance) {
+    let self = this;
+    console.log('Staring Find Nature Path');
+    return new Promise(function (resolve, reject) {
+
+      self.GetGraph(lat, long, radius, pointDist, linkTolerance).then(x => {
+        let paths = [];
+        let nodes = [];
+        x.forEachNode(function (node) {
+          nodes.push(node);
+        });
+
+        // tier 1 loop
+        nodes.map(nodeA => {
+
+          // tier 2 loop
+          nodes.map(nodeB => {
+            let path = self.FindPath(x, nodeA.id, nodeB.id);
+            paths.push(path);
+          });
+
+        });
+
+        fs.writeFile("graphData.json", JSON.stringify(paths), function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+        
+        resolve(paths);
+
+      })
+    });
   }
 
 }

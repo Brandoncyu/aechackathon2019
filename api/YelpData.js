@@ -3,8 +3,8 @@ const yelp = require('yelp-fusion');
 var Bottleneck = require("bottleneck/es5");
 
 const limiter = new Bottleneck({
-  maxConcurrent: 1,
-  minTime: 300
+  // maxConcurrent: 1,
+  minTime: 200
 });
 
 class YelpData {

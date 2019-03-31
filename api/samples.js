@@ -19,19 +19,24 @@ const RouteData = require('./RouteData');
 //   console.log(x);
 // });
 
-RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.6).then(x => {
-  let nodes = [];
-  
-  x.forEachLink(function (link) {
-    console.log(link);
-  });
+// RouteData.GetGraph(47.660273, -122.409887, 1, 0.5, 0.7).then(x => {
+//   let nodes = [];
 
-  // x.forEachNode(function (node) {
-  //   nodes.push(node);
-  // });
+//   x.forEachLink(function (link) {
+//     console.log(link);
+//   });
 
-  console.log(nodes);
-})
+//   // x.forEachNode(function (node) {
+//   //   nodes.push(node);
+//   // });
+
+//   console.log(nodes);
+// })
+
+RouteData.FindNaturePath(47.660273, -122.409887, 1, 0.5, 0.7).then(x => {
+  console.log(x);
+  console.log(x);
+});
 
 // graph.forEachLink(function(link) {
 //   console.log(link);
