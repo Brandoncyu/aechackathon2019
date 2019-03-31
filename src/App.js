@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import InitialForm from './components/InitialForm'
 import MapContainer from './components/MapContainer'
 import Notes from './components/Notes'
+import axios from 'axios'
 import {
   Button,
   Container,
@@ -88,7 +89,15 @@ class App extends Component {
     })
   }
 
+  finishStroll = async () =>{
+    this.setState({signin: true})
+    await axios.post('http://localhost:4000/send', {email: this.state.email, text: this.state.blobs})
+  }
+
+
+
   render() {
+
     return (
       <div>
         <h1 id ="title">Stroll</h1>
@@ -120,7 +129,7 @@ class App extends Component {
           <Row>
             <Col xl="2"></Col>
             <Col style={{display: 'flex', justifyContent: 'center'}} >
-              <Button size="lg" color="primary" block onClick={()=>this.setState({signin: true})}>Finish My Stroll!</Button>
+              <Button size="lg" color="primary" block onClick={this.finishStroll}>Finish My Stroll!</Button>
             </Col>
             <Col xl="2"></Col>
           </Row>
