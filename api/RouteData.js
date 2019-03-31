@@ -69,7 +69,9 @@ class RouteData {
 
           graph.addNode(idA, {
             x: +o.idA[0],
-            y: +o.idA[1]
+            y: +o.idA[1],
+            greenScore: o.greenScore,
+            parkScore: o.parkScore,
           });
 
           let dx = (+o.idA[0]) - (+o.idB[0])
@@ -173,7 +175,17 @@ class RouteData {
     return pathFinder.find(idA, idB);
   }
 
-  static FindNaturePath(lat, long, radius, pointDist, linkTolerance) {
+    /**
+   * Evaluate a walkable region with views to naturegiven an origin lat/long, radius, and
+   * distance between points for creation of a grid.
+   * @param {Number} lat Latitude of location.
+   * @param {Number} long Longitude of location.
+   * @param {Number} radius The radius of the bounding geometry from the given lat/long origin.
+   * @param {Number} pointDist How far apart the points should be in the point grid.
+   * @param {Number} linkTolerance The minimum distance between points to be considered a "link".
+   * @returns {Array} An array of all possible paths;
+   */
+  static FindNaturePaths(lat, long, radius, pointDist, linkTolerance) {
     let self = this;
     console.log('Staring Find Nature Path');
     return new Promise(function (resolve, reject) {
@@ -191,7 +203,10 @@ class RouteData {
           // tier 2 loop
           nodes.map(nodeB => {
             let path = self.FindPath(x, nodeA.id, nodeB.id);
-            paths.push(path);
+
+            if (path.length > 1) {
+              paths.push(path);
+            }
           });
 
         });
@@ -201,11 +216,35 @@ class RouteData {
             console.log(err);
           }
         });
-        
+
         resolve(paths);
 
       })
     });
+  }
+
+    /**
+   * Get graph data from the points which are walkable given an origin lat/long, radius, and
+   * distance between points for creation of a grid. Sort with the top nature walks first.
+   * @param {Object} json A serialized version of the JSON data comprising a ngraph.graph.
+   * @returns {Array} A list of paths, sorted from most exposed to nature to least.
+   */
+  static FindTopNaturePaths(json) {
+    let returnObj = [];
+
+    json.map(path =>{
+      let totalGreenScore = 0;
+      path.map(node => {
+        totalGreenScore = totalGreenScore + node.data.greenScore + node.data.parkScore;
+      });
+      returnObj.push( {
+        path: path,
+        totalGreenScore: totalGreenScore
+      })
+    });
+
+    returnObj.sort((a, b) => (a.totalGreenScore < b.totalGreenScore) ? 1 : -1)
+    return returnObj;
   }
 
 }

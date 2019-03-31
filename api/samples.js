@@ -33,10 +33,13 @@ const RouteData = require('./RouteData');
 //   console.log(nodes);
 // })
 
-RouteData.FindNaturePath(47.660273, -122.409887, 1, 0.5, 0.7).then(x => {
-  console.log(x);
-  console.log(x);
-});
+// RouteData.FindNaturePaths(47.660273, -122.409887, 1, 0.5, 0.7).then(x => {
+//   console.log(x);
+// });
+
+let json = require('../graphData.json');
+let result = RouteData.FindTopNaturePaths(json);
+console.log(result);
 
 // graph.forEachLink(function(link) {
 //   console.log(link);
