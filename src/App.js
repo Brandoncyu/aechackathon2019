@@ -12,6 +12,12 @@ import {
   Col,
 } from 'reactstrap'
 
+// const ColorParse = require('./api/ColorParse');
+// const StreetData = require('./api/StreetData');
+// import WeatherData from './api/WeatherData6'
+// const WeatherData = require('./api/WeatherData');
+// const RouteData = require('./api/RouteData');
+
 class App extends Component {
   constructor(props){
     super(props)
