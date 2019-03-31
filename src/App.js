@@ -101,8 +101,6 @@ class App extends Component {
     await axios.post('http://localhost:4000/send', {email: this.state.email, text: this.state.blobs})
   }
 
-
-
   render() {
 
     return (
@@ -136,7 +134,7 @@ class App extends Component {
           <Row>
             <Col xl="2"></Col>
             <Col style={{display: 'flex', justifyContent: 'center'}} >
-              <Button size="lg" color="primary" block onClick={this.finishStroll}>Finish My Stroll!</Button>
+              <Button className="finishButton" size="md" color="primary" block onClick={this.finishStroll}>Finish My Stroll!</Button>
             </Col>
             <Col xl="2"></Col>
           </Row>

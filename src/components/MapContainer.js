@@ -7,7 +7,7 @@ import {
 } from 'reactstrap'
 
 const mapStyles = {
-  width: '80%',
+  width: '100%',
   height: '50vh',
   marginLeft: 'auto',
   marginRight: 'auto'
@@ -43,8 +43,8 @@ export class MapContainer extends Component {
     return (
         <Container fluid={true} >
           <Row noGutters={true}>
-          <Col xl="3"></Col>
-          <Col xl="6" >
+          <Col xl="0"></Col>
+          <Col xl="12" >
             <div style={{ height: '60vh', textAlign: "center"}} id="map">
               <h3 id="map-title">You are currently here</h3>
               <Map
@@ -71,7 +71,7 @@ export class MapContainer extends Component {
               </Map>
             </div>
             </Col>
-            <Col xl="3"></Col>
+            <Col xl="0"></Col>
           </Row>
         </Container>
 
@@ -80,5 +80,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBiwsS0P3PVv4dr2sTs61i_9d-ICOsmSgw'
+  apiKey: 'AIzaSyBUNFlc_YrmWgt1qBu_Om8UU5UVFbCN260'
 })(MapContainer);
