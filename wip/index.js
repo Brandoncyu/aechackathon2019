@@ -1,5 +1,11 @@
 const ColorParse = require('./ColorParse');
 const StreetData = require('./StreetData');
+const YelpParks = require('./YelpParks');
+
+YelpParks.ParkSearch(47.6694956, -122.31547389999999).then(d => {
+  console.log(d);
+  console.log(d);
+});
 
 
 // ColorParse.GetPalette(46.414382, 10.013988, 151.78).then(colors => {
@@ -16,16 +22,3 @@ const StreetData = require('./StreetData');
 //   console.log(result);
 //   console.log(result);
 // })
-
-// StreetData.GetStreets('Seattle').then(x => console.log(x))
-// StreetData.GetStreets2(3600237385,);
-
-var query_overpass = require('./QueryOSM');
-
-let cityName = 'Seattle';
-query_overpass(`area["name"="${cityName}"];out body;`).then(x => console.log(x))
-
-
-// query_overpass(`area["name"="${cityName}"];out body;`).then(res => {
-//   console.log(res);
-// }).catch(e => console.error(e));

@@ -12,6 +12,7 @@
     "get-pixels": "^3.3.2",
     "node-vibrant": "^3.2.0-alpha",
     "querystring": "^0.2.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "yelp-fusion": "^2.2.1"
   }
 }
