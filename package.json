@@ -12,6 +12,7 @@
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0",
+    "rhino3dm": "^0.1.9",
     "suncalc": "^1.8.0",
     "turf": "^3.0.14",
     "yelp-fusion": "^2.2.1"
