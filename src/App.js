@@ -12,6 +12,7 @@ import {
   Input
 } from 'reactstrap'
 import InitialForm from './components/InitialForm'
+import Notes from './components/Notes'
 
 class App extends Component {
   constructor(props){
@@ -20,8 +21,31 @@ class App extends Component {
       email: '',
       time: '',
       pace: 'slow',
-      features: []
+      features: [],
+      latitude: '',
+      longitude: ''
     }
+    this.getMyLocation = this.getMyLocation.bind(this)
+  }
+
+  componentDidMount() {
+    this.getMyLocation()
+  }
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation
+
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+
   }
 
   editState = (e) => {
@@ -44,7 +68,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <h1 id ="title">Stroll</h1>
@@ -55,6 +78,12 @@ class App extends Component {
           time = {this.state.time}
           pace = {this.state.pace}
           features = {this.state.features}
+        />
+        <br></br>
+        <Notes
+          latitude = {this.state.latitude}
+          longitude = {this.state.longitude}
+          getMyLocation = {this.getMyLocation}
         />
       </div>
     );

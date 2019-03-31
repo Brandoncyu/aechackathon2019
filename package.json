@@ -7,6 +7,8 @@
     "node-vibrant": "^3.2.0-alpha",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-mic": "^12.4.1",
+    "react-mp3-recorder": "^1.1.2",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0"
   },
