@@ -43,8 +43,8 @@ export class MapContainer extends Component {
     return (
         <Container fluid={true} >
           <Row noGutters={true}>
-          <Col xl="0"></Col>
-          <Col xl="12" >
+          <Col xl="3"></Col>
+          <Col xl="6" >
             <div style={{ height: '60vh', textAlign: "center"}} id="map">
               <h3 id="map-title">You are currently here</h3>
               <Map
@@ -71,7 +71,7 @@ export class MapContainer extends Component {
               </Map>
             </div>
             </Col>
-            <Col xl="0"></Col>
+            <Col xl="3"></Col>
           </Row>
         </Container>
 
