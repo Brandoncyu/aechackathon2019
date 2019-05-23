@@ -7,7 +7,7 @@ import {
 } from 'reactstrap'
 
 const mapStyles = {
-  width: '100%',
+  width: '80%',
   height: '50vh',
   marginLeft: 'auto',
   marginRight: 'auto'
