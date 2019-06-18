@@ -24,6 +24,8 @@ In the project directory, you can run:
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+You will also need to run the server seperately. The repo for the server can be found [here](https://github.com/Brandoncyu/aec-backend)
+
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
